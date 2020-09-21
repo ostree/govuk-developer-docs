@@ -2,10 +2,17 @@
   breadcrumb = if current_page.data.section == "Icinga alerts"
                  ""
                else
-                 "<p><a href='/manual.html##{section_url}'>#{current_page.data.section}</a></p>"
+                 "<p class='govuk-body govuk-!-margin-top-4'><a href='/manual.html##{section_url}'>#{current_page.data.section}</a></p>"
                end
 %>
-<% html = "#{breadcrumb} <h1 id='header'>#{current_page.data.title}</h1>#{yield}" %>
+
+<% last_updated_banner = capture do %>
+  <div class='last-updated' style='text-align: right'>
+    Last updated: <%= last_updated(current_page) %>
+  </div>
+<% end %>
+
+<% html = "#{breadcrumb} <h1 id='header'>#{current_page.data.title}</h1> #{last_updated_banner} #{yield}" %>
 
 <% content_for :page_description, Snippet.generate(html) %>
 
